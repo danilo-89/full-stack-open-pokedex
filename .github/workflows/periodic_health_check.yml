@@ -1,15 +1,8 @@
 name: Health check
 
 on:
-  # Trigger the workflow on push events to the 'main' branch.
-  push:
-    branches:
-      - main
-  # Trigger the workflow on pull requests targeting the 'main' branch,
-  # specifically when a pull request is opened or when changes are synchronized.
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize]
+  schedule:
+    - cron: '0 0 * * 0'  # Runs every Sunday at 00:00 UTC
 
 jobs:
   periodic_health_check:
