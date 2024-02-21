@@ -28,6 +28,6 @@ jobs:
         run: echo "$COMMIT_MESSAGES_JOIN"
       - name: check messages condition
         env:
-          COMMIT_MESSAGES_RESULT: ${{ toJson(!contains(join(github.event.commits.*.message, ', '), '#skip')) }}
-        run: echo "$COMMIT_MESSAGES_RESULT"
+          COMMIT_MESSAGES_RESULT_TEST: ${{ toJson(!contains(join(github.event.commits.*.message, ', '), '#skip')) }}
+        run: echo "$COMMIT_MESSAGES_RESULT_TEST"
         
