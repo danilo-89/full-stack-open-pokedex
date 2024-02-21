@@ -10,6 +10,7 @@ on:
 
 jobs:
   simple_deployment_pipeline:
+    name: 'simple deployment pipeline'
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +31,7 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
   tag_release:
+      name: 'tag release'
       needs: [simple_deployment_pipeline]
       runs-on: ubuntu-20.04
       steps:
