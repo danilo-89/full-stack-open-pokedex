@@ -37,6 +37,20 @@ jobs:
         # or jobs from running when commits explicitly mention skipping them with '#skip'.
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      - name: Build Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && success()}}
+        with:
+          severity: info
+          details: Build Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ github.event_name == 'push' && failure()}}
+        with:
+          severity: error
+          details: Build Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     name: 'tag release'
     # The current job has a dependency on the successful completion of
